@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Смажена кава — створіть власний кавовий мікс зі знижкою 20%</title>
+    <meta
+      name="description"
+      content="Створіть власний кавовий мікс: оберіть зерна, обсмаження кожного та упаковку. Перший пробний мікс зі знижкою 20%."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon-devlog.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cream: "#F4F0E5",
+              sand: "#EADFC8",
+              espresso: "#2A1B14",
+              accent: "#C2461E",
+              leaf: "#2E6B45",
+              "leaf-soft": "#E4EFE4",
+              row: "#F1E9D8",
+              line: "#D9CDB6",
+            },
+            maxWidth: { page: "1440px" },
+            fontFamily: {
+              serif: ['"Source Serif 4"', "Georgia", "serif"],
+              sans: ["Manrope", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer components {
+        .page-wrap {
+          @apply mx-auto max-w-page px-4 sm:px-8 lg:px-12;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="min-h-screen font-sans text-espresso">
+    <a href="#main" class="skip-link">Перейти до змісту</a>
+
+    <!-- 1. Шапка з навігацією (компонент Header з ЛР №6) -->
+    <header class="sticky top-0 z-40 border-b border-line bg-cream">
+      <div
+        class="page-wrap flex items-center justify-between gap-3 py-2 lg:gap-6 lg:py-3"
+      >
+        <a href="#top" class="shrink-0 rounded-lg" aria-label="Смажена кава — на початок">
+          <img
+            src="assets/images/logo-smazhena-kava.svg"
+            alt=""
+            width="63"
+            height="80"
+            class="h-14 w-auto lg:h-24"
+          />
+        </a>
+
+        <nav id="site-nav" aria-label="Головна навігація" class="hidden lg:block">
+          <ul class="flex items-center gap-5 text-sm xl:gap-10 xl:text-base">
+            <li><a href="#varieties" class="nav-link">Сорти кави</a></li>
+            <li><a href="#how" class="nav-link">Як це працює</a></li>
+            <li><a href="#about" class="nav-link">Про нас</a></li>
+            <li><a href="#faq" class="nav-link">FAQ</a></li>
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-1 sm:gap-2">
+
+          <a
+            href="#builder"
+            class="hidden min-h-11 items-center rounded-xl bg-espresso px-5 py-3 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98] sm:inline-flex xl:min-h-16 xl:rounded-2xl xl:px-10 xl:text-base"
+            ><span lang="en">Create your very own mix.</span></a
+          >
+
+          <button
+            type="button"
+            id="menu-toggle"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl transition hover:bg-espresso/10 lg:hidden"
+            aria-label="Відкрити меню"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Мобільне меню -->
+      <div id="mobile-menu" hidden class="border-t border-line bg-cream lg:hidden">
+        <nav aria-label="Мобільна навігація" class="page-wrap pb-5 pt-2">
+          <ul class="divide-y divide-line">
+            <li><a href="#how" class="flex min-h-12 items-center text-lg font-semibold transition hover:text-accent">Як це працює</a></li>
+            <li><a href="#community" class="flex min-h-12 items-center text-lg transition hover:text-accent">Рецепти тижня</a></li>
+            <li><a href="#builder" class="flex min-h-12 items-center text-lg transition hover:text-accent">Створити мікс</a></li>
+            <li><a href="#varieties" class="flex min-h-12 items-center text-lg transition hover:text-accent">Сорти кави</a></li>
+            <li><a href="#about" class="flex min-h-12 items-center text-lg transition hover:text-accent">Про нас</a></li>
+            <li><a href="#faq" class="flex min-h-12 items-center text-lg transition hover:text-accent">FAQ</a></li>
+            <li><a href="#reviews" class="flex min-h-12 items-center text-lg transition hover:text-accent">Відгуки</a></li>
+            <li><a href="#contacts" class="flex min-h-12 items-center text-lg transition hover:text-accent">Пункти видачі</a></li>
+          </ul>
+          <a
+            href="#builder"
+            class="mt-4 flex min-h-12 w-full items-center justify-center rounded-xl bg-espresso px-6 py-3 text-base font-semibold text-cream transition hover:bg-black sm:hidden"
+            ><span lang="en">Create your very own mix.</span></a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 2. Слоган-CTA -->
+      <section id="top" aria-labelledby="hero-title">
+        <div class="page-wrap grid items-center gap-8 py-10 md:grid-cols-2 lg:grid-cols-[7fr_5fr] lg:gap-14 lg:py-16">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-widest text-accent">Смажена кава · Modern Blend</p>
+            <h1 id="hero-title" class="mt-3 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl"><span lang="en">Create your very own mix.</span></h1>
+            <p class="mt-5 max-w-xl text-lg text-espresso/80">Зберіть власний кавовий мікс: оберіть зерна, ступінь обсмаження кожного та упаковку. Перший пробний мікс зі знижкою 20%.</p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#how" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-espresso px-8 py-3 font-semibold text-cream transition hover:bg-black active:scale-[.98]">Як це працює</a>
+              <a href="#builder" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-espresso/50 px-8 py-3 font-semibold transition hover:bg-espresso/5 active:scale-[.98]">Створити мікс −20%</a>
+            </div>
+          </div>
+          <div class="relative overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5">
+            <img src="assets/images/bean-sidamo.svg" alt="Світло обсмажені зерна в керамічній мисці на лляній серветці" width="960" height="480" class="h-64 w-full object-cover sm:h-80" />
+            <p class="absolute left-4 top-4 rounded-xl bg-accent px-4 py-2 text-lg font-bold text-white">−20%</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Приклад міксу за популярністю (модуль соцмережі) -->
+      <section id="community" aria-labelledby="community-title" class="bg-cream">
+        <div class="page-wrap py-12 lg:py-16">
+          <div class="max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-widest text-accent">Спільнота</p>
+            <h2 id="community-title" class="mt-2 font-serif text-3xl sm:text-4xl">Найпопулярніші мікси тижня</h2>
+            <p class="mt-3 text-lg text-espresso/80">Рецепти, які користувачі спільноти найбільше вподобали за останні 7 днів. Відкрийте будь-який і зберіть його зі знижкою.</p>
+          </div>
+          <ol class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <li>
+              <article class="h-full flex flex-col rounded-3xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-espresso font-semibold text-cream" aria-hidden="true">I</span>
+                  <div><p class="font-semibold">ivan_v60</p><p class="text-xs text-espresso/65">Фільтр</p></div>
+                </div>
+                <p class="rounded-lg bg-cream px-3 py-1.5 text-sm font-semibold">№1 тижня</p>
+              </div>
+              <h3 class="mt-4 font-serif text-2xl">Ягідний V60</h3>
+              <div class="mt-3 flex h-3 overflow-hidden rounded-full bg-row" role="img" aria-label="50% Ньєрі · 50% Сідамо"><span style="width:50%;background:#b9814a"></span><span style="width:50%;background:#d9a76a"></span></div>
+              <p class="mt-3 text-sm text-espresso/80">50% Ньєрі · 50% Сідамо</p>
+              <div class="mt-auto flex items-center justify-between gap-2 pt-5">
+                <p class="inline-flex min-h-11 items-center gap-2 font-semibold text-accent">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+                  <span>31<span class="sr-only"> вподобань за тиждень</span></span>
+                </p>
+                <button type="button" data-recipe="[{&quot;id&quot;: &quot;nyeri&quot;, &quot;pct&quot;: 50, &quot;roast&quot;: 2}, {&quot;id&quot;: &quot;sidamo&quot;, &quot;pct&quot;: 50, &quot;roast&quot;: 1}]" data-recipe-name="Ягідний V60" class="min-h-11 rounded-xl border border-espresso/50 px-4 text-sm font-semibold transition hover:bg-espresso/5">Спробувати −20%<span class="sr-only">: Ягідний V60</span></button>
+              </div>
+            </article>
+            </li>
+            <li>
+              <article class="h-full flex flex-col rounded-3xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-espresso font-semibold text-cream" aria-hidden="true">О</span>
+                  <div><p class="font-semibold">Олена_К</p><p class="text-xs text-espresso/65">Фільтр</p></div>
+                </div>
+                <p class="rounded-lg bg-cream px-3 py-1.5 text-sm font-semibold">№2 тижня</p>
+              </div>
+              <h3 class="mt-4 font-serif text-2xl">Ранок у Києві</h3>
+              <div class="mt-3 flex h-3 overflow-hidden rounded-full bg-row" role="img" aria-label="60% Сідамо · 40% Уїла"><span style="width:60%;background:#d9a76a"></span><span style="width:40%;background:#8a5a33"></span></div>
+              <p class="mt-3 text-sm text-espresso/80">60% Сідамо · 40% Уїла</p>
+              <div class="mt-auto flex items-center justify-between gap-2 pt-5">
+                <p class="inline-flex min-h-11 items-center gap-2 font-semibold text-accent">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+                  <span>24<span class="sr-only"> вподобань за тиждень</span></span>
+                </p>
+                <button type="button" data-recipe="[{&quot;id&quot;: &quot;sidamo&quot;, &quot;pct&quot;: 60, &quot;roast&quot;: 1}, {&quot;id&quot;: &quot;huila&quot;, &quot;pct&quot;: 40, &quot;roast&quot;: 3}]" data-recipe-name="Ранок у Києві" class="min-h-11 rounded-xl border border-espresso/50 px-4 text-sm font-semibold transition hover:bg-espresso/5">Спробувати −20%<span class="sr-only">: Ранок у Києві</span></button>
+              </div>
+            </article>
+            </li>
+            <li>
+              <article class="h-full flex flex-col rounded-3xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-espresso font-semibold text-cream" aria-hidden="true">B</span>
+                  <div><p class="font-semibold">barista_max</p><p class="text-xs text-espresso/65">Еспресо</p></div>
+                </div>
+                <p class="rounded-lg bg-cream px-3 py-1.5 text-sm font-semibold">№3 тижня</p>
+              </div>
+              <h3 class="mt-4 font-serif text-2xl">Темний вівторок</h3>
+              <div class="mt-3 flex h-3 overflow-hidden rounded-full bg-row" role="img" aria-label="50% Суматра · 30% Антигуа · 20% Серрадо"><span style="width:50%;background:#33200f"></span><span style="width:30%;background:#5e3b22"></span><span style="width:20%;background:#5e3b22"></span></div>
+              <p class="mt-3 text-sm text-espresso/80">50% Суматра · 30% Антигуа · 20% Серрадо</p>
+              <div class="mt-auto flex items-center justify-between gap-2 pt-5">
+                <p class="inline-flex min-h-11 items-center gap-2 font-semibold text-accent">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+                  <span>17<span class="sr-only"> вподобань за тиждень</span></span>
+                </p>
+                <button type="button" data-recipe="[{&quot;id&quot;: &quot;sumatra&quot;, &quot;pct&quot;: 50, &quot;roast&quot;: 5}, {&quot;id&quot;: &quot;antigua&quot;, &quot;pct&quot;: 30, &quot;roast&quot;: 4}, {&quot;id&quot;: &quot;serrado&quot;, &quot;pct&quot;: 20, &quot;roast&quot;: 4}]" data-recipe-name="Темний вівторок" class="min-h-11 rounded-xl border border-espresso/50 px-4 text-sm font-semibold transition hover:bg-espresso/5">Спробувати −20%<span class="sr-only">: Темний вівторок</span></button>
+              </div>
+            </article>
+            </li>
+          </ol>
+          <p class="mt-4 text-sm text-espresso/65">Дані модуля спільноти наведено як приклад для прототипу.</p>
+        </div>
+      </section>
+
+      <!-- 4. Як це працює (знижка 20%) -->
+      <section id="how" aria-labelledby="how-title">
+        <div class="page-wrap py-12 lg:py-16">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div class="max-w-2xl">
+              <p class="text-sm font-semibold uppercase tracking-widest text-accent">Інструкція</p>
+              <h2 id="how-title" class="mt-2 font-serif text-3xl sm:text-4xl">Як це працює</h2>
+              <p class="mt-3 text-lg text-espresso/80">Чотири кроки від ідеї до пакета з вашим рецептом.</p>
+            </div>
+            <p class="inline-flex items-center gap-3 self-start rounded-2xl bg-espresso px-5 py-4 text-cream lg:self-auto">
+              <span class="rounded-xl bg-accent px-3 py-1.5 text-xl font-bold text-white">−20%</span>
+              <span class="font-semibold">на ваш перший пробний мікс</span>
+            </p>
+          </div>
+          <ol class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <li class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <img src="assets/icons/icon-qa.svg" alt="" width="45" height="70" loading="lazy" class="h-14 w-auto" />
+              <h3 class="mt-4 font-serif text-2xl">Пройдіть опитування</h3>
+              <p class="mt-2 text-espresso/80">Дванадцять питань про смак і спосіб заварювання. Або пропустіть їх і зберіть мікс вручну.</p>
+            </li>
+            <li class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <img src="assets/icons/icon-devlog.svg" alt="" width="44" height="70" loading="lazy" class="h-14 w-auto" />
+              <h3 class="mt-4 font-serif text-2xl">Оберіть зерна</h3>
+              <p class="mt-2 text-espresso/80">До трьох зерен у міксі. Для кожного окремо налаштуйте частку та ступінь обсмаження.</p>
+            </li>
+            <li class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <img src="assets/icons/icon-mix.svg" alt="" width="70" height="70" loading="lazy" class="h-14 w-auto" />
+              <h3 class="mt-4 font-serif text-2xl">Налаштуйте упаковку</h3>
+              <p class="mt-2 text-espresso/80">Колір пакета, акцент, символ і назва на етикетці. Превʼю оновлюється одразу.</p>
+            </li>
+            <li class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <img src="assets/icons/icon-about.svg" alt="" width="56" height="70" loading="lazy" class="h-14 w-auto" />
+              <h3 class="mt-4 font-serif text-2xl">Отримайте −20%</h3>
+              <p class="mt-2 text-espresso/80">Перший пробний мікс ми обсмажуємо під замовлення зі знижкою 20%.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 5. Меню створення міксу -> упаковка -->
+      <section id="builder" aria-labelledby="builder-title" class="bg-cream">
+        <div class="page-wrap py-12 lg:py-16">
+          <div class="max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-widest text-accent">Конструктор</p>
+            <h2 id="builder-title" class="mt-2 font-serif text-3xl sm:text-4xl">Створіть пробний мікс</h2>
+            <p class="mt-3 text-lg text-espresso/80">Зберіть склад, а потім налаштуйте упаковку. На перший пробний мікс діє знижка 20%.</p>
+          </div>
+
+          <ol id="stepper" class="mt-8 flex flex-wrap gap-2 text-sm font-semibold" aria-label="Кроки створення">
+            <li data-step-ind="1" aria-current="step" class="rounded-full bg-espresso px-4 py-2 text-cream">1. Склад</li>
+            <li data-step-ind="2" class="rounded-full bg-white px-4 py-2 text-espresso/65 ring-1 ring-line">2. Упаковка</li>
+            <li data-step-ind="3" class="rounded-full bg-white px-4 py-2 text-espresso/65 ring-1 ring-line">3. Готово</li>
+          </ol>
+
+          <div class="mt-6 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-black/5 sm:p-8">
+            <!-- Крок 1 -->
+            <div id="step-1" data-step="1">
+              <h3 id="mix-heading" tabindex="-1" class="font-serif text-2xl">Склад міксу · 250 г</h3>
+              <ul class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <li class="rounded-2xl bg-row p-4" data-row="0">
+                <div role="group" aria-labelledby="bean-label-0">
+                <label id="bean-label-0" for="bean-0" class="text-sm font-semibold">Зерно 1</label>
+                <select id="bean-0" data-bean-select class="mt-1.5 min-h-11 w-full rounded-xl border border-espresso/50 bg-white px-3 text-base"><option value="serrado" selected>Серрадо · Бразилія</option><option value="sidamo">Сідамо · Ефіопія</option><option value="huila">Уїла · Колумбія</option><option value="nyeri">Ньєрі · Кенія</option><option value="antigua">Антигуа · Гватемала</option><option value="sumatra">Суматра · Індонезія</option></select>
+                <label for="pct-0" class="mt-3 flex justify-between text-sm text-espresso/80"><span>Частка</span><span><span data-pct-out>50</span>%</span></label>
+                <input id="pct-0" data-pct type="range" min="0" max="100" step="5" value="50" />
+                <label for="roast-0" class="flex justify-between text-sm text-espresso/80"><span>Обсмаження</span><span data-roast-out>Середнє</span></label>
+                <input id="roast-0" data-roast type="range" min="1" max="5" step="1" value="3" /></div>
+              </li>
+              <li class="rounded-2xl bg-row p-4" data-row="1">
+                <div role="group" aria-labelledby="bean-label-1">
+                <label id="bean-label-1" for="bean-1" class="text-sm font-semibold">Зерно 2</label>
+                <select id="bean-1" data-bean-select class="mt-1.5 min-h-11 w-full rounded-xl border border-espresso/50 bg-white px-3 text-base"><option value="serrado">Серрадо · Бразилія</option><option value="sidamo">Сідамо · Ефіопія</option><option value="huila" selected>Уїла · Колумбія</option><option value="nyeri">Ньєрі · Кенія</option><option value="antigua">Антигуа · Гватемала</option><option value="sumatra">Суматра · Індонезія</option></select>
+                <label for="pct-1" class="mt-3 flex justify-between text-sm text-espresso/80"><span>Частка</span><span><span data-pct-out>30</span>%</span></label>
+                <input id="pct-1" data-pct type="range" min="0" max="100" step="5" value="30" />
+                <label for="roast-1" class="flex justify-between text-sm text-espresso/80"><span>Обсмаження</span><span data-roast-out>Середнє</span></label>
+                <input id="roast-1" data-roast type="range" min="1" max="5" step="1" value="3" /></div>
+              </li>
+              <li class="rounded-2xl bg-row p-4" data-row="2">
+                <div role="group" aria-labelledby="bean-label-2">
+                <label id="bean-label-2" for="bean-2" class="text-sm font-semibold">Зерно 3</label>
+                <select id="bean-2" data-bean-select class="mt-1.5 min-h-11 w-full rounded-xl border border-espresso/50 bg-white px-3 text-base"><option value="serrado">Серрадо · Бразилія</option><option value="sidamo">Сідамо · Ефіопія</option><option value="huila">Уїла · Колумбія</option><option value="nyeri">Ньєрі · Кенія</option><option value="antigua" selected>Антигуа · Гватемала</option><option value="sumatra">Суматра · Індонезія</option></select>
+                <label for="pct-2" class="mt-3 flex justify-between text-sm text-espresso/80"><span>Частка</span><span><span data-pct-out>20</span>%</span></label>
+                <input id="pct-2" data-pct type="range" min="0" max="100" step="5" value="20" />
+                <label for="roast-2" class="flex justify-between text-sm text-espresso/80"><span>Обсмаження</span><span data-roast-out>Середнє</span></label>
+                <input id="roast-2" data-roast type="range" min="1" max="5" step="1" value="4" /></div>
+              </li>
+              </ul>
+              <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+                <p id="balance" role="status" class="inline-flex items-center gap-2 rounded-xl bg-leaf-soft px-4 py-2.5 text-sm font-semibold text-leaf sm:text-base">Баланс готовий · 100%</p>
+                <p class="text-right">
+                  <span class="block text-sm text-espresso/65">Пробний мікс зі знижкою 20%</span>
+                  <span class="mr-2 text-espresso/65 line-through"><span id="price-old">0</span> грн</span>
+                  <span class="font-serif text-3xl"><span id="price-new">0</span> грн</span>
+                </p>
+              </div>
+              <div class="mt-6 flex justify-end">
+                <button type="button" id="to-pack" aria-describedby="balance" class="min-h-12 w-full rounded-xl bg-espresso px-8 font-semibold text-cream transition hover:bg-black active:scale-[.98] aria-disabled:cursor-not-allowed aria-disabled:opacity-50 sm:w-auto">Далі: упаковка</button>
+              </div>
+            </div>
+
+            <!-- Крок 2 -->
+            <div id="step-2" data-step="2" hidden>
+              <h3 id="pack-heading" tabindex="-1" class="font-serif text-2xl">Упаковка</h3>
+              <div class="mt-5 grid items-start gap-8 lg:grid-cols-[7fr_5fr]">
+                <form id="pack-form" class="space-y-6" novalidate>
+                  <fieldset>
+                    <legend class="font-semibold">Пакет</legend>
+                    <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  <label class="choice-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line bg-row px-3 transition hover:border-espresso/50">
+                    <input type="radio" name="bag" value="kraft" class="sr-only" checked />
+                    <span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background: #c9a37a"></span>
+                    <span class="text-sm font-medium">Крафт<span class="text-espresso/65"></span></span>
+                  </label>
+                  <label class="choice-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line bg-row px-3 transition hover:border-espresso/50">
+                    <input type="radio" name="bag" value="cream" class="sr-only" />
+                    <span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background: #efe6d2"></span>
+                    <span class="text-sm font-medium">Кремовий<span class="text-espresso/65"></span></span>
+                  </label>
+                  <label class="choice-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line bg-row px-3 transition hover:border-espresso/50">
+                    <input type="radio" name="bag" value="terracotta" class="sr-only" />
+                    <span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background: #b9573a"></span>
+                    <span class="text-sm font-medium">Теракота<span class="text-espresso/65"> +20</span></span>
+                  </label>
+                  <label class="choice-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line bg-row px-3 transition hover:border-espresso/50">
+                    <input type="radio" name="bag" value="olive" class="sr-only" />
+                    <span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background: #6b7350"></span>
+                    <span class="text-sm font-medium">Оливка<span class="text-espresso/65"> +20</span></span>
+                  </label>
+                  <label class="choice-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line bg-row px-3 transition hover:border-espresso/50">
+                    <input type="radio" name="bag" value="black" class="sr-only" />
+                    <span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background: #2b2522"></span>
+                    <span class="text-sm font-medium">Чорний<span class="text-espresso/65"> +20</span></span>
+                  </label>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend class="font-semibold">Акцентний колір етикетки</legend>
+                    <div class="mt-4 flex flex-wrap gap-4">
+                  <label class="swatch relative inline-flex h-11 w-11 cursor-pointer rounded-full" style="background: #c2461e">
+                    <input type="radio" name="accent" value="#C2461E" class="sr-only" aria-label="Іржавий" checked />
+                  </label>
+                  <label class="swatch relative inline-flex h-11 w-11 cursor-pointer rounded-full" style="background: #2e6b45">
+                    <input type="radio" name="accent" value="#2E6B45" class="sr-only" aria-label="Листяний зелений" />
+                  </label>
+                  <label class="swatch relative inline-flex h-11 w-11 cursor-pointer rounded-full" style="background: #c79a2b">
+                    <input type="radio" name="accent" value="#C79A2B" class="sr-only" aria-label="Гірчичний" />
+                  </label>
+                  <label class="swatch relative inline-flex h-11 w-11 cursor-pointer rounded-full" style="background: #2f4b7c">
+                    <input type="radio" name="accent" value="#2F4B7C" class="sr-only" aria-label="Синій" />
+                  </label>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend class="font-semibold">Символ на етикетці</legend>
+                    <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  <label class="choice-card flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-line bg-row p-2 text-center transition hover:border-espresso/50">
+                    <input type="radio" name="icon" value="icon-about" class="sr-only" checked />
+                    <img src="assets/icons/icon-about.svg" alt="" width="56" height="70" class="h-12 w-auto" />
+                    <span class="text-xs font-medium">Чашка</span>
+                  </label>
+                  <label class="choice-card flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-line bg-row p-2 text-center transition hover:border-espresso/50">
+                    <input type="radio" name="icon" value="icon-devlog" class="sr-only" />
+                    <img src="assets/icons/icon-devlog.svg" alt="" width="44" height="70" class="h-12 w-auto" />
+                    <span class="text-xs font-medium">Зерно</span>
+                  </label>
+                  <label class="choice-card flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-line bg-row p-2 text-center transition hover:border-espresso/50">
+                    <input type="radio" name="icon" value="icon-mix" class="sr-only" />
+                    <img src="assets/icons/icon-mix.svg" alt="" width="70" height="70" class="h-12 w-auto" />
+                    <span class="text-xs font-medium">Ложка</span>
+                  </label>
+                  <label class="choice-card flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-line bg-row p-2 text-center transition hover:border-espresso/50">
+                    <input type="radio" name="icon" value="icon-qa" class="sr-only" />
+                    <img src="assets/icons/icon-qa.svg" alt="" width="45" height="70" class="h-12 w-auto" />
+                    <span class="text-xs font-medium">Бульбашка</span>
+                  </label>
+                    </div>
+                  </fieldset>
+                  <div>
+                    <label for="pack-title" class="block font-semibold">Назва на етикетці</label>
+                    <input id="pack-title" type="text" maxlength="28" value="Мій пробний мікс" class="mt-3 min-h-12 w-full rounded-xl border border-espresso/50 bg-white px-4" />
+                  </div>
+                  <div>
+                    <label for="pack-gift" class="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-line bg-row px-4 py-2 transition hover:border-espresso/50 sm:min-h-12 sm:px-5 lg:max-w-md">
+                      <input type="checkbox" id="pack-gift" class="check-box" aria-describedby="pack-gift-hint" />
+                      <span class="text-sm font-medium sm:text-base">Подарункова стрічка <span class="text-espresso/65">+60 грн</span></span>
+                    </label>
+                    <p id="pack-gift-hint" class="mt-2 text-xs text-espresso/65 sm:text-sm">Стрічка в кольорі етикетки додається на пакет. Ціна стрічки не входить у знижку.</p>
+                  </div>
+                </form>
+                <div>
+                  <div id="bag-preview" class="mx-auto max-w-xs" role="img" aria-label="Превʼю пакета з вашою етикеткою"></div>
+                </div>
+              </div>
+              <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+                <button type="button" id="back-mix" class="min-h-12 rounded-xl border border-espresso/50 px-8 font-semibold transition hover:bg-espresso/5">Назад до складу</button>
+                <button type="button" id="finish" class="min-h-12 rounded-xl bg-espresso px-8 font-semibold text-cream transition hover:bg-black active:scale-[.98]">Показати підсумок</button>
+              </div>
+            </div>
+
+            <!-- Крок 3 -->
+            <div id="step-3" data-step="3" hidden aria-live="polite">
+              <h3 id="done-heading" tabindex="-1" class="font-serif text-2xl">Пробний мікс готовий</h3>
+              <p id="done-summary" class="mt-3 text-lg text-espresso/80"></p>
+              <p class="mt-4 font-serif text-3xl"><span id="done-total">0</span> грн <span class="ml-2 text-base font-normal text-leaf">знижка 20% враховано</span></p>
+              <p class="mt-3 text-sm text-espresso/65">Це навчальний прототип: оплата не підключена, замовлення не створюється.</p>
+              <button type="button" id="restart" class="mt-6 min-h-12 rounded-xl border border-espresso/50 px-8 font-semibold transition hover:bg-espresso/5">Створити інший мікс</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Сорти кави -->
+      <section id="varieties" aria-labelledby="varieties-title">
+        <div class="page-wrap py-12 lg:py-16">
+          <div class="max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-widest text-accent">Каталог</p>
+            <h2 id="varieties-title" class="mt-2 font-serif text-3xl sm:text-4xl">Сорти кави, які ми пропонуємо</h2>
+            <p class="mt-3 text-lg text-espresso/80">Шість однопоходжень, з яких складаються всі наші мікси.</p>
+          </div>
+          <ul class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <li>
+              <article class="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="overflow-hidden">
+                  <img src="assets/images/bean-serrado.svg" alt="Зерна Серрадо в мисці" width="960" height="480" loading="lazy" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs uppercase tracking-wide text-espresso/65">Бразилія · 100% арабіка</p>
+                    <span class="rounded-lg bg-leaf-soft text-leaf px-2.5 py-1 text-xs font-semibold">У наявності</span>
+                  </div>
+                  <h3 class="mt-3 font-serif text-2xl">Серрадо</h3>
+                  <p class="mt-1 text-espresso/80">Шоколад · фундук · карамель</p>
+                  <dl class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div><dt class="text-espresso/65">Обсмаження</dt><dd class="font-medium">Середнє</dd></div>
+                    <div><dt class="text-espresso/65">Обробка</dt><dd class="font-medium">Натуральна</dd></div>
+                    <div><dt class="text-espresso/65">Висота</dt><dd class="font-medium">1 100 м</dd></div>
+                  </dl>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+                    <p class="font-semibold">290 грн <span class="text-sm font-normal text-espresso/65">/ 250 г</span></p>
+                    <button type="button" data-bean="serrado" class="min-h-11 rounded-xl bg-espresso px-4 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98]">Обрати для міксу<span class="sr-only">: Серрадо</span></button>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="overflow-hidden">
+                  <img src="assets/images/bean-sidamo.svg" alt="Світло обсмажені зерна Сідамо" width="960" height="480" loading="lazy" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs uppercase tracking-wide text-espresso/65">Ефіопія · 100% арабіка</p>
+                    <span class="rounded-lg bg-leaf-soft text-leaf px-2.5 py-1 text-xs font-semibold">У наявності</span>
+                  </div>
+                  <h3 class="mt-3 font-serif text-2xl">Сідамо</h3>
+                  <p class="mt-1 text-espresso/80">Ягоди · жасмин · цитрус</p>
+                  <dl class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div><dt class="text-espresso/65">Обсмаження</dt><dd class="font-medium">Світле</dd></div>
+                    <div><dt class="text-espresso/65">Обробка</dt><dd class="font-medium">Мита</dd></div>
+                    <div><dt class="text-espresso/65">Висота</dt><dd class="font-medium">1 900 м</dd></div>
+                  </dl>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+                    <p class="font-semibold">360 грн <span class="text-sm font-normal text-espresso/65">/ 250 г</span></p>
+                    <button type="button" data-bean="sidamo" class="min-h-11 rounded-xl bg-espresso px-4 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98]">Обрати для міксу<span class="sr-only">: Сідамо</span></button>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="overflow-hidden">
+                  <img src="assets/images/bean-huila.svg" alt="Зерна Уїла в мисці" width="960" height="480" loading="lazy" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs uppercase tracking-wide text-espresso/65">Колумбія · 100% арабіка</p>
+                    <span class="rounded-lg bg-leaf-soft text-leaf px-2.5 py-1 text-xs font-semibold">У наявності</span>
+                  </div>
+                  <h3 class="mt-3 font-serif text-2xl">Уїла</h3>
+                  <p class="mt-1 text-espresso/80">Червоне яблуко · карамель · какао</p>
+                  <dl class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div><dt class="text-espresso/65">Обсмаження</dt><dd class="font-medium">Середнє</dd></div>
+                    <div><dt class="text-espresso/65">Обробка</dt><dd class="font-medium">Мита</dd></div>
+                    <div><dt class="text-espresso/65">Висота</dt><dd class="font-medium">1 700 м</dd></div>
+                  </dl>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+                    <p class="font-semibold">320 грн <span class="text-sm font-normal text-espresso/65">/ 250 г</span></p>
+                    <button type="button" data-bean="huila" class="min-h-11 rounded-xl bg-espresso px-4 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98]">Обрати для міксу<span class="sr-only">: Уїла</span></button>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="overflow-hidden">
+                  <img src="assets/images/bean-nyeri.svg" alt="Зерна Ньєрі в блакитній мисці" width="960" height="480" loading="lazy" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs uppercase tracking-wide text-espresso/65">Кенія · 100% арабіка</p>
+                    <span class="rounded-lg bg-amber-100 text-amber-900 px-2.5 py-1 text-xs font-semibold">Залишилось мало</span>
+                  </div>
+                  <h3 class="mt-3 font-serif text-2xl">Ньєрі</h3>
+                  <p class="mt-1 text-espresso/80">Чорна смородина · томат · цитрус</p>
+                  <dl class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div><dt class="text-espresso/65">Обсмаження</dt><dd class="font-medium">Світло-середнє</dd></div>
+                    <div><dt class="text-espresso/65">Обробка</dt><dd class="font-medium">Мита</dd></div>
+                    <div><dt class="text-espresso/65">Висота</dt><dd class="font-medium">1 800 м</dd></div>
+                  </dl>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+                    <p class="font-semibold">390 грн <span class="text-sm font-normal text-espresso/65">/ 250 г</span></p>
+                    <button type="button" data-bean="nyeri" class="min-h-11 rounded-xl bg-espresso px-4 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98]">Обрати для міксу<span class="sr-only">: Ньєрі</span></button>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="overflow-hidden">
+                  <img src="assets/images/bean-antigua.svg" alt="Темніше обсмажені зерна Антигуа" width="960" height="480" loading="lazy" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs uppercase tracking-wide text-espresso/65">Гватемала · 100% арабіка</p>
+                    <span class="rounded-lg bg-leaf-soft text-leaf px-2.5 py-1 text-xs font-semibold">У наявності</span>
+                  </div>
+                  <h3 class="mt-3 font-serif text-2xl">Антигуа</h3>
+                  <p class="mt-1 text-espresso/80">Какао · спеції · апельсин</p>
+                  <dl class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div><dt class="text-espresso/65">Обсмаження</dt><dd class="font-medium">Середньо-темне</dd></div>
+                    <div><dt class="text-espresso/65">Обробка</dt><dd class="font-medium">Мита</dd></div>
+                    <div><dt class="text-espresso/65">Висота</dt><dd class="font-medium">1 500 м</dd></div>
+                  </dl>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+                    <p class="font-semibold">340 грн <span class="text-sm font-normal text-espresso/65">/ 250 г</span></p>
+                    <button type="button" data-bean="antigua" class="min-h-11 rounded-xl bg-espresso px-4 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98]">Обрати для міксу<span class="sr-only">: Антигуа</span></button>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="overflow-hidden">
+                  <img src="assets/images/bean-sumatra.svg" alt="Темно обсмажені зерна Суматра" width="960" height="480" loading="lazy" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs uppercase tracking-wide text-espresso/65">Індонезія · 100% арабіка</p>
+                    <span class="rounded-lg bg-leaf-soft text-leaf px-2.5 py-1 text-xs font-semibold">У наявності</span>
+                  </div>
+                  <h3 class="mt-3 font-serif text-2xl">Суматра</h3>
+                  <p class="mt-1 text-espresso/80">Прянощі · цедра · тютюн</p>
+                  <dl class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div><dt class="text-espresso/65">Обсмаження</dt><dd class="font-medium">Темне</dd></div>
+                    <div><dt class="text-espresso/65">Обробка</dt><dd class="font-medium">Вологе лущення</dd></div>
+                    <div><dt class="text-espresso/65">Висота</dt><dd class="font-medium">1 300 м</dd></div>
+                  </dl>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
+                    <p class="font-semibold">330 грн <span class="text-sm font-normal text-espresso/65">/ 250 г</span></p>
+                    <button type="button" data-bean="sumatra" class="min-h-11 rounded-xl bg-espresso px-4 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98]">Обрати для міксу<span class="sr-only">: Суматра</span></button>
+                  </div>
+                </div>
+              </article>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 7. Про нас, FAQ, Відгуки -->
+      <section id="about" aria-labelledby="about-title" class="bg-cream">
+        <div class="page-wrap grid items-center gap-10 py-12 md:grid-cols-[2fr_3fr] lg:gap-16 lg:py-16">
+          <div class="mx-auto w-full max-w-xs rounded-3xl bg-cream p-6 shadow-sm ring-1 ring-line">
+            <img src="assets/images/logo-smazhena-kava.svg" alt="Логотип майстерні «Смажена кава»" width="231" height="294" loading="lazy" class="mx-auto h-auto w-full" />
+          </div>
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-widest text-accent">Про нас</p>
+            <h2 id="about-title" class="mt-2 font-serif text-3xl sm:text-4xl">Майстерня, де мікс складають під вас</h2>
+            <p class="mt-5 max-w-2xl text-lg text-espresso/80">«Смажена кава» — невелика майстерня. Ми обсмажуємо кожне зерно окремо, змішуємо за вашим рецептом і пакуємо під замовлення.</p>
+            <ul class="mt-8 grid gap-4 sm:grid-cols-3">
+              <li class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5"><p class="font-serif text-xl">5 ступенів</p><p class="mt-1 text-sm text-espresso/80">обсмаження для кожного зерна окремо</p></li>
+              <li class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5"><p class="font-serif text-xl">Під замовлення</p><p class="mt-1 text-sm text-espresso/80">обсмажуємо після вашого замовлення</p></li>
+              <li class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5"><p class="font-serif text-xl">Ваш дизайн</p><p class="mt-1 text-sm text-espresso/80">етикетка з вашою назвою та символом</p></li>
+            </ul>
+          </div>
+          <figure class="mx-auto w-full max-w-4xl md:col-span-2">
+            <div class="aspect-video overflow-hidden rounded-3xl bg-espresso shadow-sm ring-1 ring-black/5">
+              <iframe
+                class="size-full"
+                src="https://www.youtube.com/embed/GnfZcDk_Myo?si=rMGH_GpQ_Q8PIWu3"
+                title="Відео про майстерню «Смажена кава»"
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <figcaption class="mt-4 flex items-start gap-3 text-sm text-espresso/80 sm:text-base">
+              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-accent" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
+              <span>Відео не запускається саме. Натисніть Play, коли будете готові, і за потреби перевірте гучність.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="faq" aria-labelledby="faq-title">
+        <div class="mx-auto max-w-4xl px-4 py-12 sm:px-8 lg:py-16">
+          <h2 id="faq-title" class="font-serif text-3xl sm:text-4xl">Питання й відповіді</h2>
+          <div class="mt-8 divide-y divide-line overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-black/5">
+            <details class="px-5 sm:px-8">
+              <summary class="flex min-h-16 items-center justify-between gap-4 py-4 text-lg font-semibold">Як працює знижка 20%?<svg viewBox="0 0 24 24" class="chev h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+              <p class="pb-5 text-espresso/80">Знижка діє на ваш перший пробний мікс: ви збираєте склад, налаштовуєте упаковку, і підсумкова ціна показується вже зі знижкою.</p>
+            </details>
+            <details class="px-5 sm:px-8">
+              <summary class="flex min-h-16 items-center justify-between gap-4 py-4 text-lg font-semibold">Скільки зерен можна змішувати?<svg viewBox="0 0 24 24" class="chev h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+              <p class="pb-5 text-espresso/80">У пробному міксі до трьох різних зерен. Частки змінюються з кроком 5%, а сума має дорівнювати 100%.</p>
+            </details>
+            <details class="px-5 sm:px-8">
+              <summary class="flex min-h-16 items-center justify-between gap-4 py-4 text-lg font-semibold">Чи можна обрати різне обсмаження для кожного зерна?<svg viewBox="0 0 24 24" class="chev h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+              <p class="pb-5 text-espresso/80">Так. Біля кожного зерна є повзунок із п’яти ступенів обсмаження: від світлого до темного.</p>
+            </details>
+            <details class="px-5 sm:px-8">
+              <summary class="flex min-h-16 items-center justify-between gap-4 py-4 text-lg font-semibold">Що можна змінити в упаковці?<svg viewBox="0 0 24 24" class="chev h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+              <p class="pb-5 text-espresso/80">Колір пакета, акцент етикетки, символ і назву на етикетці. Превʼю оновлюється одразу.</p>
+            </details>
+            <details class="px-5 sm:px-8">
+              <summary class="flex min-h-16 items-center justify-between gap-4 py-4 text-lg font-semibold">Чому оплата не працює?<svg viewBox="0 0 24 24" class="chev h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+              <p class="pb-5 text-espresso/80">Це навчальний прототип: платіжна система не підключена, а замовлення не створюється.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" aria-labelledby="reviews-title" class="bg-cream">
+        <div class="page-wrap py-12 lg:py-16">
+          <h2 id="reviews-title" class="font-serif text-3xl sm:text-4xl">Відгуки</h2>
+          <ul class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <li class="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <figure class="flex h-full flex-col">
+                <div class="flex gap-0.5" role="img" aria-label="Оцінка 5 із 5"><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></div>
+                <blockquote class="mt-4 text-espresso/80">«Сідамо та Уїла в одному міксі дали саме ту ягідну солодкість, яку я шукала для V60. Обсмаження для кожного зерна окремо — це те, чого не вистачало.»</blockquote>
+                <figcaption class="mt-auto pt-5 font-semibold">Олена<span class="font-normal text-espresso/65"> · Київ</span></figcaption>
+              </figure>
+            </li>
+            <li class="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <figure class="flex h-full flex-col">
+                <div class="flex gap-0.5" role="img" aria-label="Оцінка 5 із 5"><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></div>
+                <blockquote class="mt-4 text-espresso/80">«Пройшов опитування за дві хвилини і отримав мікс для еспресо. Знижка на перше замовлення приємно здивувала.»</blockquote>
+                <figcaption class="mt-auto pt-5 font-semibold">Максим<span class="font-normal text-espresso/65"> · Львів</span></figcaption>
+              </figure>
+            </li>
+            <li class="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+              <figure class="flex h-full flex-col">
+                <div class="flex gap-0.5" role="img" aria-label="Оцінка 5 із 5"><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="h-5 w-5 text-accent" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></div>
+                <blockquote class="mt-4 text-espresso/80">«Зробила пакет із власним написом на подарунок колезі. Превʼю пакета допомогло одразу побачити, як це виглядатиме.»</blockquote>
+                <figcaption class="mt-auto pt-5 font-semibold">Дарина<span class="font-normal text-espresso/65"> · Одеса</span></figcaption>
+              </figure>
+            </li>
+          </ul>
+          <p class="mt-4 text-sm text-espresso/65">Приклад відгуків для навчального прототипу.</p>
+        </div>
+      </section>
+
+      <!-- 9. Контакти: пункти видачі -->
+      <section id="contacts" aria-labelledby="contacts-title">
+        <div class="page-wrap py-12 lg:py-16">
+          <p class="text-sm font-semibold uppercase tracking-widest text-accent">Контакти</p>
+          <h2 id="contacts-title" class="mt-2 font-serif text-3xl sm:text-4xl">Пункти видачі замовлень</h2>
+
+          <figure class="map-embed mx-auto mt-8 max-w-4xl" aria-labelledby="map-caption">
+            <figcaption id="map-caption" class="map-embed__caption">Заберіть своє замовлення в одного з наших партнерів</figcaption>
+            <div class="map-embed__frame">
+              <iframe
+                src="https://www.google.com/maps?q=%D0%9A%D0%B8%D1%97%D0%B2&amp;output=embed"
+                title="Інтерактивна карта Google Maps із пунктами видачі замовлень"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <p class="map-embed__note text-espresso/80">
+              <span>Перетягуйте карту й змінюйте масштаб, щоб знайти найближчий пункт.</span>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9A%D0%B8%D1%97%D0%B2" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center font-semibold text-accent underline-offset-4 transition hover:underline">Відкрити в Google Maps<span class="sr-only"> (відкриється в новій вкладці)</span></a>
+            </p>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <!-- 8. Футер (компонент Footer з ЛР №6) -->
+    <footer class="bg-espresso text-cream">
+      <div class="page-wrap grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <a href="#top" class="inline-block rounded-2xl bg-cream p-3 transition hover:opacity-90" aria-label="Смажена кава — на початок">
+            <img src="assets/images/logo-smazhena-kava.svg" alt="" width="79" height="100" loading="lazy" class="h-24 w-auto" />
+          </a>
+          <p class="mt-5 max-w-xs text-cream/75">Кавові мікси під вашу чашку: власний баланс зерен, обсмаження та упаковка.</p>
+          <ul class="mt-5 flex gap-3" aria-label="Соціальні мережі">
+            <li>
+              <a href="#" class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 transition hover:bg-white/20" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 transition hover:bg-white/20" aria-label="Telegram">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M21 4 3 11l5.5 2L10 19l3-3.5 4.5 3.5z" /><path d="m8.5 13 8-6" /></svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 transition hover:bg-white/20" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" /><path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor" /></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <nav aria-label="Навігація у футері">
+          <h2 class="font-semibold uppercase tracking-wider text-cream/60 text-sm">Навігація</h2>
+          <ul class="mt-4 space-y-1">
+            <li><a href="#how" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Як це працює</a></li>
+            <li><a href="#community" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Рецепти тижня</a></li>
+            <li><a href="#builder" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Створити мікс</a></li>
+            <li><a href="#varieties" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Сорти кави</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Корисні посилання">
+          <h2 class="font-semibold uppercase tracking-wider text-cream/60 text-sm">Корисне</h2>
+          <ul class="mt-4 space-y-1">
+            <li><a href="#about" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Про нас</a></li>
+            <li><a href="#faq" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">FAQ</a></li>
+            <li><a href="#reviews" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Відгуки</a></li>
+            <li><a href="#contacts" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">Пункти видачі</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="font-semibold uppercase tracking-wider text-cream/60 text-sm">Контакти</h2>
+          <address class="mt-4 space-y-1 not-italic">
+            <p><a href="mailto:hello@example.com" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">hello@example.com</a></p>
+            <p><a href="tel:+380000000000" class="inline-flex min-h-11 items-center text-cream/85 transition hover:text-white hover:underline">+38 000 000 00 00</a></p>
+            <p class="text-cream/75">Щодня, 9:00–19:00</p>
+          </address>
+        </div>
+      </div>
+      <div class="border-t border-white/10">
+        <p class="page-wrap py-5 text-sm text-cream/65">
+          © 2026 Смажена кава. Навчальний проєкт: оплата й вхід не підключені.
+        </p>
+      </div>
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite" data-show="false" class="fixed bottom-5 left-1/2 z-50 w-[92vw] max-w-md -translate-x-1/2 rounded-2xl bg-espresso px-5 py-3 text-center font-medium text-cream shadow-xl"></div>
+    <script src="js/landing.js" defer></script>
+  </body>
+</html>
