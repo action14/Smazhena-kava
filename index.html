@@ -80,6 +80,12 @@
         <div class="flex items-center gap-1 sm:gap-2">
 
           <a
+            href="#account"
+            class="hidden min-h-11 items-center rounded-xl border border-espresso/50 px-5 py-3 text-sm font-semibold transition hover:bg-espresso/5 active:scale-[.98] lg:inline-flex xl:min-h-16 xl:rounded-2xl xl:px-8 xl:text-base"
+            >Акаунт</a
+          >
+
+          <a
             href="#builder"
             class="hidden min-h-11 items-center rounded-xl bg-espresso px-5 py-3 text-sm font-semibold text-cream transition hover:bg-black active:scale-[.98] sm:inline-flex xl:min-h-16 xl:rounded-2xl xl:px-10 xl:text-base"
             ><span lang="en">Create your very own mix.</span></a
@@ -109,6 +115,7 @@
             <li><a href="#about" class="flex min-h-12 items-center text-lg transition hover:text-accent">Про нас</a></li>
             <li><a href="#faq" class="flex min-h-12 items-center text-lg transition hover:text-accent">FAQ</a></li>
             <li><a href="#reviews" class="flex min-h-12 items-center text-lg transition hover:text-accent">Відгуки</a></li>
+            <li><a href="#account" class="flex min-h-12 items-center text-lg transition hover:text-accent">Акаунт: вхід і реєстрація</a></li>
             <li><a href="#contacts" class="flex min-h-12 items-center text-lg transition hover:text-accent">Пункти видачі</a></li>
           </ul>
           <a
@@ -679,6 +686,115 @@
         </div>
       </section>
 
+      <!-- 8.1. Акаунт: вхід або реєстрація -->
+      <section id="account" aria-labelledby="account-title">
+        <div class="page-wrap py-12 lg:py-16">
+          <div class="mx-auto max-w-3xl">
+            <p class="text-sm font-semibold uppercase tracking-widest text-accent">Акаунт</p>
+            <h2 id="account-title" class="mt-2 font-serif text-3xl sm:text-4xl">Приєднуйтесь до спільноти</h2>
+            <p class="mt-3 text-lg text-espresso/80">Увійдіть у наявний акаунт або створіть новий, щоб ділитися рецептами й вподобувати чужі.</p>
+
+            <div role="radiogroup" aria-label="Вхід або реєстрація" class="mt-8 grid grid-cols-2 gap-2 rounded-3xl bg-white p-3 shadow-sm ring-1 ring-black/5 sm:p-4">
+              <input type="radio" name="account-mode" id="mode-register" value="register" class="peer/register sr-only" checked />
+              <input type="radio" name="account-mode" id="mode-login" value="login" class="peer/login sr-only" />
+
+              <label for="mode-register" class="flex min-h-12 cursor-pointer items-center justify-center rounded-xl border border-line bg-row px-3 text-center text-sm font-semibold transition hover:border-espresso/50 peer-checked/register:border-espresso peer-checked/register:bg-espresso peer-checked/register:text-cream peer-focus-visible/register:outline peer-focus-visible/register:outline-2 peer-focus-visible/register:outline-offset-2 peer-focus-visible/register:outline-accent sm:text-base">Створити акаунт</label>
+              <label for="mode-login" class="flex min-h-12 cursor-pointer items-center justify-center rounded-xl border border-line bg-row px-3 text-center text-sm font-semibold transition hover:border-espresso/50 peer-checked/login:border-espresso peer-checked/login:bg-espresso peer-checked/login:text-cream peer-focus-visible/login:outline peer-focus-visible/login:outline-2 peer-focus-visible/login:outline-offset-2 peer-focus-visible/login:outline-accent sm:text-base">Я вже маю акаунт</label>
+
+              <!-- Реєстрація (форма зворотного зв'язку) -->
+              <div class="col-span-2 hidden p-2 peer-checked/register:block sm:p-4">
+                <h3 class="font-serif text-2xl">Створіть акаунт</h3>
+                <form id="feedbackForm" action="#" method="post" novalidate aria-labelledby="register-title" class="mt-5">
+                  <h4 id="register-title" class="sr-only">Форма реєстрації</h4>
+                  <p id="formStatus" data-form-status role="status" aria-live="polite" class="hidden"></p>
+                  <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div class="">
+                  <label for="username" class="block font-semibold">Ім’я (ваш тег)</label>
+                  <div class="relative mt-2">
+                    <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-espresso/65" aria-hidden="true">@</span>
+                    <input type="text" id="username" name="username" autocomplete="off" enterkeyhint="next" placeholder="ira_coffee" required aria-required="true" aria-invalid="false" aria-describedby="usernameHint usernameError" class="block min-h-12 w-full rounded-xl border border-espresso/50 bg-white px-4 text-base transition placeholder:text-espresso/50 hover:border-espresso focus-visible:border-espresso focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 pl-9" autocapitalize="none" autocorrect="off" spellcheck="false" />
+                    <span id="usernameOk" class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-green-700" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg></span>
+                  </div>
+                  <p id="usernameHint" class="mt-1.5 text-sm text-espresso/65">Ваш тег</p>
+                  <p id="usernameError" class="mt-1.5 hidden text-sm font-medium text-red-700" aria-live="polite"></p>
+                </div>
+                <div class="">
+                  <label for="nickname" class="block font-semibold">Нік</label>
+                  <div class="relative mt-2">
+                    
+                    <input type="text" id="nickname" name="nickname" autocomplete="nickname" enterkeyhint="next" placeholder="Ірина з Києва" required aria-required="true" aria-invalid="false" aria-describedby="nicknameHint nicknameError" class="block min-h-12 w-full rounded-xl border border-espresso/50 bg-white px-4 text-base transition placeholder:text-espresso/50 hover:border-espresso focus-visible:border-espresso focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2" />
+                    <span id="nicknameOk" class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-green-700" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg></span>
+                  </div>
+                  <p id="nicknameHint" class="mt-1.5 text-sm text-espresso/65">Що бачать користувачі</p>
+                  <p id="nicknameError" class="mt-1.5 hidden text-sm font-medium text-red-700" aria-live="polite"></p>
+                </div>
+                <div class="">
+                  <label for="email" class="block font-semibold">Емейл</label>
+                  <div class="relative mt-2">
+                    
+                    <input type="email" id="email" name="email" autocomplete="email" enterkeyhint="next" placeholder="user@gmail.com" required aria-required="true" aria-invalid="false" aria-describedby="emailHint emailError" class="block min-h-12 w-full rounded-xl border border-espresso/50 bg-white px-4 text-base transition placeholder:text-espresso/50 hover:border-espresso focus-visible:border-espresso focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2" />
+                    <span id="emailOk" class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-green-700" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg></span>
+                  </div>
+                  <p id="emailHint" class="mt-1.5 text-sm text-espresso/65">Наприклад, user@gmail.com</p>
+                  <p id="emailError" class="mt-1.5 hidden text-sm font-medium text-red-700" aria-live="polite"></p>
+                </div>
+                <div class="">
+                  <label for="phone" class="block font-semibold">Телефон</label>
+                  <div class="relative mt-2">
+                    
+                    <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" enterkeyhint="next" placeholder="+380501234567" required aria-required="true" aria-invalid="false" aria-describedby="phoneHint phoneError" class="block min-h-12 w-full rounded-xl border border-espresso/50 bg-white px-4 text-base transition placeholder:text-espresso/50 hover:border-espresso focus-visible:border-espresso focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2" />
+                    <span id="phoneOk" class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-green-700" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg></span>
+                  </div>
+                  <p id="phoneHint" class="mt-1.5 text-sm text-espresso/65">Формат: +380501234567</p>
+                  <p id="phoneError" class="mt-1.5 hidden text-sm font-medium text-red-700" aria-live="polite"></p>
+                </div>
+
+                    <div class="md:col-span-2">
+                      <div class="flex items-start gap-3">
+                        <input type="checkbox" id="agreement" name="agreement" required aria-required="true" aria-invalid="false" aria-describedby="agreementError" class="check-box mt-0.5" />
+                        <label for="agreement" class="min-h-6 cursor-pointer">Погоджуюсь з політикою конфіденційності</label>
+                      </div>
+                      <p id="agreementError" class="mt-1.5 hidden text-sm font-medium text-red-700" aria-live="polite"></p>
+                      <details class="mt-2">
+                        <summary class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-accent underline-offset-4 hover:underline">Читати політику<svg viewBox="0 0 24 24" class="chev h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+                        <p class="mt-1 text-sm text-espresso/80">Це навчальний прототип: введені дані обробляються лише у вашому браузері й нікуди не передаються.</p>
+                      </details>
+                    </div>
+
+                    <div class="flex flex-col gap-3 md:col-span-2 md:flex-row md:items-center md:justify-between">
+                      <p class="text-sm text-espresso/80">Вже маєте акаунт? <label for="mode-login" class="inline-flex min-h-11 cursor-pointer items-center font-semibold text-accent underline underline-offset-4">Увійти</label></p>
+                      <button type="submit" class="min-h-12 w-full rounded-xl bg-espresso px-8 font-semibold text-cream transition hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:scale-[.98] md:w-auto">Надіслати</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Вхід в існуючий акаунт -->
+              <div class="col-span-2 hidden p-2 peer-checked/login:block sm:p-4">
+                <h3 class="font-serif text-2xl">Вхід в акаунт</h3>
+                <form id="loginForm" action="#" method="post" novalidate class="mt-5 grid grid-cols-1 gap-5">
+                  <p id="loginStatus" data-form-status role="status" aria-live="polite" class="hidden"></p>
+                <div class="">
+                  <label for="loginEmail" class="block font-semibold">Емейл акаунта</label>
+                  <div class="relative mt-2">
+                    
+                    <input type="email" id="loginEmail" name="email" autocomplete="email" enterkeyhint="go" placeholder="user@gmail.com" required aria-required="true" aria-invalid="false" aria-describedby="loginEmailHint loginEmailError" class="block min-h-12 w-full rounded-xl border border-espresso/50 bg-white px-4 text-base transition placeholder:text-espresso/50 hover:border-espresso focus-visible:border-espresso focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2" />
+                    <span id="loginEmailOk" class="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 text-green-700" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg></span>
+                  </div>
+                  <p id="loginEmailHint" class="mt-1.5 text-sm text-espresso/65">Наприклад, user@gmail.com</p>
+                  <p id="loginEmailError" class="mt-1.5 hidden text-sm font-medium text-red-700" aria-live="polite"></p>
+                </div>
+                  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <p class="text-sm text-espresso/80">Ще немає акаунта? <label for="mode-register" class="inline-flex min-h-11 cursor-pointer items-center font-semibold text-accent underline underline-offset-4">Створити</label></p>
+                    <button type="submit" class="min-h-12 w-full rounded-xl bg-espresso px-8 font-semibold text-cream transition hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:scale-[.98] md:w-auto">Увійти</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 9. Контакти: пункти видачі -->
       <section id="contacts" aria-labelledby="contacts-title">
         <div class="page-wrap py-12 lg:py-16">
@@ -768,7 +884,23 @@
       </div>
     </footer>
 
+    <!-- Повідомлення про створення акаунта (імітація) -->
+    <dialog id="successDialog" aria-labelledby="successTitle" aria-describedby="successText" class="m-auto w-[92vw] max-w-md rounded-3xl bg-cream p-0 shadow-2xl">
+      <div class="p-6 text-center sm:p-8">
+        <span class="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-leaf-soft text-leaf" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7" /></svg>
+        </span>
+        <h2 id="successTitle" class="mt-4 font-serif text-3xl">Акаунт створено</h2>
+        <p id="successText" class="mt-3 text-lg text-espresso/80">Вітаємо у спільноті!</p>
+        <p class="mt-3 text-sm text-espresso/65">Це демонстрація: дані нікуди не надсилаються.</p>
+        <form method="dialog" class="mt-6">
+          <button type="submit" id="successClose" autofocus class="min-h-12 w-full rounded-xl bg-espresso px-8 font-semibold text-cream transition hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:scale-[.98]">Зрозуміло</button>
+        </form>
+      </div>
+    </dialog>
+
     <div id="toast" role="status" aria-live="polite" data-show="false" class="fixed bottom-5 left-1/2 z-50 w-[92vw] max-w-md -translate-x-1/2 rounded-2xl bg-espresso px-5 py-3 text-center font-medium text-cream shadow-xl"></div>
     <script src="js/landing.js" defer></script>
+    <script src="js/validation.js" defer></script>
   </body>
 </html>
