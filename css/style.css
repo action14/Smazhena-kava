@@ -273,3 +273,25 @@ dialog::backdrop {
     gap: var(--space-sm);
   }
 }
+
+/* Слайдер топових міксів (Swiper): крапки пагінації у стилі сайту */
+.top-mixes-pagination .swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: 0 !important;
+  border-radius: 9999px;
+  background: var(--espresso);
+  opacity: 0.25;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.top-mixes-pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+  transform: scale(1.25);
+}
+.top-mixes-pagination .swiper-pagination-bullet:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.top-mixes-swiper .swiper-slide {
+  height: auto;
+}
